@@ -23,3 +23,7 @@
 ## 苦戦した点
 NSG設定でHTTP通信できず、
 Inbound rule を追加して解決。
+
+<img width="632" height="160" alt="HelloAzure" src="https://github.com/user-attachments/assets/13112b81-b8e7-4e72-8e29-0694e021f6f1" />
+
+
