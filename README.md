@@ -1,8 +1,7 @@
 # Azure Linux Practice
 
 # 1. 概要
-Azure上にLinux VMを構築し、  
-SSH接続・nginx公開・NSG設定を実施しました。
+Azure上にLinux VMを構築し、SSH接続・nginx公開・NSG設定を実施しました。
 
 Linux VM上でnginxを構築し、ブラウザからWebページへアクセスできることを確認しました。
 
@@ -80,6 +79,7 @@ sudo apt install nginx -y
 ## Web公開確認
 
 ブラウザからVMのPublic IPへアクセスし、nginxの「Hello Azure」が表示されることを確認。
+<img width="632" height="160" alt="HelloAzure" src="https://github.com/user-attachments/assets/68d29a5a-346b-4bb3-a9d0-536d434a9b7b" />
 
 ---
 
