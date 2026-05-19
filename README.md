@@ -11,20 +11,20 @@ Linux VM上でnginxを構築し、ブラウザからWebページへアクセス�
 # 2. 構成図
 ```text
 Resource Group
-└─ rg-linux-practice
+└─ rg-test-01
     │
     └─ Virtual Network
-       └─ vnet-test-01 (10.0.0.0/16)
+       └─ vnet-Linux-01 (10.0.0.0/16)
           │
           └─ Subnet
-             └─ subnet-app (10.0.10.0/24)
+             └─ subnet-web-01 (10.0.10.0/24)
                 │
                 ├─ NSG
                 │  ├─ allow-ssh (22)
                 │  └─ allow-http (80)
                 │
                 └─ Ubuntu VM
-                   └─ vm-test-01
+                   └─ vm-linux-01
                       ├─ Public IP
                       └─ nginx
 ```
@@ -79,7 +79,7 @@ sudo apt install nginx -y
 
 ## Web公開確認
 
-ブラウザからVMのPublic IPへアクセスし、nginxのデフォルトページが表示されることを確認。
+ブラウザからVMのPublic IPへアクセスし、nginxの「Hello Azure」が表示されることを確認。
 
 ---
 
