@@ -1,33 +1,115 @@
 # Azure Linux Practice
 
-### 20260516
+# 1. 概要
+Azure上にLinux VMを構築し、  
+SSH接続・nginx公開・NSG設定を実施しました。
 
-## 構築手順
+Linux VM上でnginxを構築し、ブラウザからWebページへアクセスできることを確認しました。
+
+---
+
+# 2. 構成図
+```text
+Resource Group
+└─ rg-linux-practice
+    │
+    └─ Virtual Network
+       └─ vnet-test-01 (10.0.0.0/16)
+          │
+          └─ Subnet
+             └─ subnet-app (10.0.10.0/24)
+                │
+                ├─ NSG
+                │  ├─ allow-ssh (22)
+                │  └─ allow-http (80)
+                │
+                └─ Ubuntu VM
+                   └─ vm-test-01
+                      ├─ Public IP
+                      └─ nginx
+```
+
+---
+
+# 3. 使用サービス
+| サービス | 用途 |
+|---|---|
+| Resource Group | リソース管理 |
+| Virtual Network | 仮想ネットワーク |
+| Subnet | ネットワーク分離 |
+| NSG | 通信制御 |
+| Ubuntu VM | Linuxサーバ |
+| Public IP | 外部接続 |
+| nginx | Webサーバ |
+
+---
+
+# 4. 作成順序
 1. Resource Group作成
 2. Virtual Network作成
-3. NSG設定
-4. Ubuntu VM作成
-5. SSH接続
-6. nginxインストール
-7. HTML編集
+3. Subnet作成
+4. NSG作成
+5. Ubuntu VM作成
+6. SSH接続
+7. nginxインストール
+8. HTML編集
+9. ブラウザアクセス確認
 
-## 実施内容
-- SSH接続
+---
+
+# 5. 動作確認
+## SSH接続
+
+```bash
+ssh -i vm-key.pem azureuser@PublicIP
+```
+
+SSH接続できることを確認。
+
+---
+
+## nginxインストール
+
+```bash
+sudo apt update
+sudo apt install nginx -y
+```
+
+---
+
+## Web公開確認
+
+ブラウザからVMのPublic IPへアクセスし、nginxのデフォルトページが表示されることを確認。
+
+---
+
+# 6. 苦戦したこと
+## HTTP通信できなかった
+
+### 原因
+NSGのInbound Ruleが未設定だった。
+
+### 解決方法
+HTTP(80)許可ルールを追加し解決。
+
+---
+
+## SSH接続できなかった
+
+### 原因
+.pemファイル配置ミス。
+
+### 解決方法
+PowerShellの実行ディレクトリを修正し解決。
+
+---
+
+# 7. 学んだこと
+- Azure VMの基本構築
+- SSH接続方法
+- Linux基本コマンド
 - nginxインストール
-- nginx構築
-- HTML公開
-
-## 学んだこと
-- Azure無料枠の注意点
-- Private Endpointは課金対象になりやすい（実際に設定してみたが、これ毎日課金されるとなると結構高いな、、、やめよ）
-- VM停止の重要性
-
-## 苦戦した点
-- NSG設定でHTTP通信できず、
-- Inbound rule を追加して解決。
-
-## 動作確認
-- nginx Web Server
-<img width="632" height="160" alt="HelloAzure" src="https://github.com/user-attachments/assets/13112b81-b8e7-4e72-8e29-0694e021f6f1" />
-
-
+- NSGによる通信制御
+- Public IPによる外部公開
+- Azure従量課金の考え方
+- VM停止（割り当て解除）の重要性
